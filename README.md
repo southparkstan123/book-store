@@ -1,8 +1,8 @@
-# Rails-app
+# Book-store
 
 ## Introduction
 
-This is an experimental SPA using Ruby on Rails with Vue, it may be the template repo for further development for Full-stack project.
+This is an web app using Ruby on Rails with Vue for book store.
 
 ## Features
 1. Basic Token Based (JWT) Authentication
