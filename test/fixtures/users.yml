@@ -2,10 +2,10 @@
 
 admin:
   username: 'admin'
-  password: 'testing1234'
+  password_digest: 'testing1234'
   email: 'admin@railsapp.com'
 
 test_user:
   username: 'testuser'
-  password: 'testing1234'
+  password_digest: 'testing1234'
   email: 'test@railsapp.com' 

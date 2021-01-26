@@ -23,6 +23,7 @@ book_C:
   creator: admin
   updater: admin
   publisher: publisher_B
+  
 book_D:
   name: 'Book D'
   abstract: 'The description for book D'
