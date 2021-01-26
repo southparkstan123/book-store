@@ -4,10 +4,10 @@ class Book < ApplicationRecord
             presence: { message: 'is required' },
             uniqueness: { message: '%{value} is already taken' }
   validates :abstract,
-            length: { maximum: 100, too_long: "should be less than %{count} characters" }
+            length: { maximum: 100, too_long: "should be less than %{count} characters" },
             presence: { message: 'is required' }
   validates :price,
-            presence: { message: 'is required' }
+            presence: { message: 'is required' },
             numericality: { only_integer: false, greater_than_or_equal_to: 0 }
   
   # A book record can be created and updated by user
