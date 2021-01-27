@@ -19,19 +19,19 @@ Rails.application.routes.draw do
       namespace 'author' do
         get '/list', to: 'author#list'
         get '/:id', to: 'author#show'
-        # post '/', to: 'author#create'
-        # patch '/:id', to: 'author#update'
-        # delete '/:id', to: 'author#delete'
+        post '/', to: 'author#create'
+        patch '/:id', to: 'author#update'
+        delete '/:id', to: 'author#delete'
       end
 
       namespace 'publisher' do
         get '/list', to: 'publisher#list'
         get '/:id', to: 'publisher#show'
-        # post '/', to: 'publisher#create'
-        # patch '/:id', to: 'publisher#update'
-        # delete '/:id', to: 'publisher#delete'
+        post '/', to: 'publisher#create'
+        patch '/:id', to: 'publisher#update'
+        delete '/:id', to: 'publisher#delete'
       end
-      
+
     end
   end
   root to: 'home#index'

@@ -3,8 +3,8 @@ module Api::V1::Author
     before_action :authorized, except: [:list, :show]
 
     def list
-      @authors = Author.all
-      render json: @authors
+      @authors = Author.includes(:creator, :updater, :books)
+      render json: @authors, each_serializer: AuthorSerializer
     end
 
     def show
@@ -22,7 +22,7 @@ module Api::V1::Author
       @author.updater = logged_in_user
 
       if @author.save
-        render json: @author
+        render json: @author, status: :created
       else
         render json: { message: 'Error occurs!', errors: @author.errors.full_messages.uniq }, status: 422
       end
@@ -33,7 +33,7 @@ module Api::V1::Author
       @author.updater = logged_in_user
 
       if @author.update(author_params)
-        render json: { message: "Book \"#{@user.username}\" is updated" }
+        render json: { message: "Author \"#{@author.name}\" is updated" }
       else
         render json: { message: 'Error occurs!', errors: @author.errors.full_messages.uniq }, status: 422
       end
@@ -41,10 +41,11 @@ module Api::V1::Author
 
     def delete
       @author = Author.find_by(id: params[:id])
-      if @author.delete
-        render json: { message: "Book \"#{@author.name}\" is deleted" }
+      if !@author.nil?
+        Author.delete(params[:id])
+        render json: { message: "Author \"#{@author.name}\" is deleted" }
       else
-        render json: { message: 'Book not found!', errors: @author.errors.full_messages.uniq }, status: 404
+        render json: { message: 'Author not found!' }, status: 404
       end
     end
 
@@ -55,4 +56,3 @@ module Api::V1::Author
     end
   end
 end
-

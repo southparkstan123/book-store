@@ -3,8 +3,8 @@ module Api::V1::Book
     before_action :authorized, except: [:list, :show]
 
     def list
-      @books = Book.all
-      render json: @books
+      @books = Book.includes(:authors, :creator, :updater, :publisher)
+      render json: @books, each_serializer: BookSerializer
     end
 
     def show
@@ -21,21 +21,20 @@ module Api::V1::Book
       @book.creator = logged_in_user
       @book.updater = logged_in_user
 
-      @book.authors << [book_B, book_C, book_D]
-
       if @book.save
-        render json: @book
+        render json: @book, status: :created
       else
         render json: { message: 'Error occurs!', errors: @book.errors.full_messages.uniq }, status: 422
       end
     end
 
     def update
-      @book.update(book_params)
+      @book = Book.find_by(id: params[:id])
       @book.updater = logged_in_user
+      @book.update(book_params)
 
       if @book.update(book_params)
-        render json: { message: "Book \"#{@user.username}\" is updated" }
+        render json: { message: "Book \"#{@book.name}\" is updated" }
       else
         render json: { message: 'Error occurs!', errors: @book.errors.full_messages.uniq }, status: 422
       end
@@ -43,19 +42,19 @@ module Api::V1::Book
 
     def delete
       @book = Book.find_by(id: params[:id])
-      if @book.delete
+      if !@book.nil?
+        Book.delete(params[:id])
         render json: { message: "Book \"#{@book.name}\" is deleted" }
       else
-        render json: { message: 'Book not found!', errors: @book.errors.full_messages.uniq }, status: 404
+        render json: { message: 'Book not found!' }, status: 404
       end
     end
 
     private
 
     def book_params
-      params.require(:book).permit(:name, :abstract, :price, :publisher, authors_id: [])
+      params.require(:book).permit(:name, :abstract, :price, :publisher_id, author_ids: [])
     end
 
   end
 end
-

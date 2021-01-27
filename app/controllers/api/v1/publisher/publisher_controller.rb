@@ -3,8 +3,8 @@ module Api::V1::Publisher
     before_action :authorized, except: [:list, :show]
 
     def list
-      @publishers = Publisher.all
-      render json: @publishers
+      @publishers = Publisher.includes(:creator, :updater, :books)
+      render json: @publishers, each_serializer: PublisherSerializer
     end
 
     def show
@@ -21,10 +21,8 @@ module Api::V1::Publisher
       @publisher.creator = logged_in_user
       @publisher.updater = logged_in_user
 
-      @publisher.authors << [book_B, book_C, book_D]
-
       if @publisher.save
-        render json: @publisher
+        render json: @publisher, status: :created
       else
         render json: { message: 'Error occurs!', errors: @publisher.errors.full_messages.uniq }, status: 422
       end
@@ -35,7 +33,7 @@ module Api::V1::Publisher
       @publisher.updater = logged_in_user
 
       if @publisher.update(publisher_params)
-        render json: { message: "Book \"#{@user.username}\" is updated" }
+        render json: { message: "Publisher \"#{@publisher.name}\" is updated" }
       else
         render json: { message: 'Error occurs!', errors: @publisher.errors.full_messages.uniq }, status: 422
       end
@@ -43,10 +41,11 @@ module Api::V1::Publisher
 
     def delete
       @publisher = Publisher.find_by(id: params[:id])
-      if @publisher.delete
-        render json: { message: "Book \"#{@publisher.name}\" is deleted" }
+      if !@publisher.nil?
+        Publisher.delete(params[:id])
+        render json: { message: "Publisher \"#{@publisher.name}\" is deleted" }
       else
-        render json: { message: 'Book not found!', errors: @publisher.errors.full_messages.uniq }, status: 404
+        render json: { message: 'Publisher not found!' }, status: 404
       end
     end
 
