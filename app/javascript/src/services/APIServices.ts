@@ -33,3 +33,18 @@ export async function signout(): Promise<any> {
   // remove the token stored in localStorage
   return await localStorage.removeItem('token');
 }
+
+export async function fetchBooks(): Promise<any> {
+  const result = await axios.get('/api/v1/book/list');
+  return result;
+}
+
+export async function fetchAuthors(): Promise<any> {
+  const result = await axios.get('/api/v1/author/list');
+  return result;
+}
+
+export async function fetchPublishers(): Promise<any> {
+  const result = await axios.get('/api/v1/publisher/list');
+  return result;
+}
