@@ -29,6 +29,7 @@ module Api::V1::Author
     end
 
     def update
+      @author = Author.find_by(id: params[:id])
       @author.update(author_params)
       @author.updater = logged_in_user
 
@@ -52,7 +53,7 @@ module Api::V1::Author
     private
 
     def author_params
-      params.require(:author).permit(:name, :description)
+      params.permit(:name, :description)
     end
   end
 end
