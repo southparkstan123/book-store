@@ -11,5 +11,5 @@ class Publisher < ApplicationRecord
   belongs_to :updater, class_name: 'User', foreign_key: :updater_id, inverse_of: :updated_books
 
   # A Publisher has published many books
-  has_many :books
+  has_many :books, dependent: :destroy
 end

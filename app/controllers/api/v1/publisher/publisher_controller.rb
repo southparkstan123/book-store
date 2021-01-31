@@ -29,6 +29,7 @@ module Api::V1::Publisher
     end
 
     def update
+      @publisher = Publisher.find_by(id: params[:id])
       @publisher.update(publisher_params)
       @publisher.updater = logged_in_user
 
@@ -43,7 +44,7 @@ module Api::V1::Publisher
       @publisher = Publisher.find_by(id: params[:id])
       if !@publisher.nil?
         Publisher.delete(params[:id])
-        render json: { message: "Publisher \"#{@publisher.name}\" is deleted" }
+        render json: { message: "Publisher \"#{@publisher.name}\" and its books are deleted" }
       else
         render json: { message: 'Publisher not found!' }, status: 404
       end
@@ -52,7 +53,7 @@ module Api::V1::Publisher
     private
 
     def publisher_params
-      params.require(:publisher).permit(:name, :description)
+      params.permit(:name, :description)
     end
   end
 end
