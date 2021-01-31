@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2021_01_25_061308) do
 
   add_foreign_key "authors", "users", column: "creator_id"
   add_foreign_key "authors", "users", column: "updater_id"
-  add_foreign_key "books", "publishers"
+  add_foreign_key "books", "publishers", on_delete: :cascade
   add_foreign_key "books", "users", column: "creator_id"
   add_foreign_key "books", "users", column: "updater_id"
   add_foreign_key "publishers", "users", column: "creator_id"

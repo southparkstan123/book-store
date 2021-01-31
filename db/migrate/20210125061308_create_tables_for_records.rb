@@ -24,7 +24,7 @@ class CreateTablesForRecords < ActiveRecord::Migration[6.1]
       t.decimal :price, precision: 5, scale: 2
       t.references :creator, class_name: 'User', foreign_key: { to_table: :users }
       t.references :updater, class_name: 'User', foreign_key: { to_table: :users }
-      t.references :publisher, class_name: 'Publisher', foreign_key: { to_table: :publishers }
+      t.references :publisher, class_name: 'Publisher', foreign_key: { to_table: :publishers, on_delete: :cascade }
 
       t.timestamps
     end
