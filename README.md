@@ -69,6 +69,8 @@ If you want to seeding of a database with data, Use ```rails db:seed```
 
 Run ```rails test``` or ```rails test -e test``` for all cases in server-side code
 
+You can run ```COVERAGE=true rails test``` for the test coverage and generate report
+
 #### Frontend
 
 ```yarn test:unit ``` for all cases in client-side code
