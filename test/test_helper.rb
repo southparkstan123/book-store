@@ -35,11 +35,12 @@ module LoginHelper
 
   def register(user)
     post '/api/v1/user/register', 
-      params: { 
-        username: user.username,
-        password: user.password,
-        email: user.email
-      }, as: :json
+      params: user, as: :json
+  end
+
+  def login(user)
+    post '/api/v1/user/login', 
+      params: user, as: :json
   end
 end
 
