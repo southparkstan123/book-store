@@ -15,7 +15,7 @@ class Book < ApplicationRecord
   belongs_to :updater, class_name: 'User', foreign_key: :updater_id, inverse_of: :updated_books
 
   # A Book belongs to a publisher
-  belongs_to :publisher, class_name: 'Publisher', foreign_key: 'publisher_id'
+  belongs_to :publisher, class_name: 'Publisher', foreign_key: :publisher_id
 
   # A Book belongs to many books
   has_and_belongs_to_many :authors
