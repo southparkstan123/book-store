@@ -6,9 +6,9 @@ class BookSerializer < ApplicationSerializer
   belongs_to :updater, serializer: UserSerializer
   belongs_to :publisher, serializer: PublisherSerializer
 
-  # def authors
-  #   object.association(:authors).loaded?
-  # end
+  def price
+    object.price.to_f
+  end
   
 end
 
