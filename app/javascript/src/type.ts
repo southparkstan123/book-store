@@ -5,6 +5,8 @@ export type SumResult = {
 
 export type ModelType ='alert' | 'confirm' | 'form';
 
+export type ModuleType = 'book' | 'author' | 'publisher';
+
 export type Modal = {
   visible: boolean;
   type: ModelType;
@@ -52,3 +54,58 @@ export type RegistrationForm = {
     password_confirmation: string;
   }
 }
+
+export type BookForm = {
+  name: string,
+  abstract: string,
+  price: number | null,
+  publisher_id: number | null,
+  author_ids: Array<number>
+}
+
+export type AuthorForm = {
+  name: string,
+  description: string
+}
+
+export type PublisherForm = {
+  name: string,
+  description: string
+}
+
+export type Timestamp = {
+  created_at: string;
+  updated_at: string;
+}
+
+export type Creator = UserInfo & Timestamp
+
+export type Updater = UserInfo & Timestamp
+
+export type Book = {
+  id: number;
+  name: string;
+  price: number;
+  abstract: string;
+  publisher: Publisher | null;
+  authors: Array<Author>;
+  creator: Creator;
+  updater: Updater;
+} & Timestamp
+
+export type Publisher = {
+  id: number;
+  name: string;
+  description: string;
+  creator: Creator;
+  updater: Updater
+} & Timestamp
+
+export type Author = {
+  id: number;
+  name: string;
+  description: string;
+  creator: Creator;
+  updater: Updater;
+  books: Array<Book>;
+} & Timestamp

@@ -65,7 +65,7 @@
 <script lang="ts">
 import { RegistrationForm } from '@/type';
 import { mapActions } from 'vuex';
-import { register } from '@/services/APIServices';
+import { register } from '@/services/AuthServices';
 import ErrorFeedback from '@/components/ErrorFeedback.vue';
 import InputField from '@/components/InputField.vue';
 

@@ -1,4 +1,4 @@
-import { signin, verify, signout } from '@/services/APIServices';
+import { signin, verify, signout } from '@/services/AuthServices';
 import { LoginForm, UserInfo, UserState } from '@/type';
 
 const state: UserState = {

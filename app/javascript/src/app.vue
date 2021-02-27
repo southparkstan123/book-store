@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
 
 export default {
@@ -36,10 +36,28 @@ export default {
     })
   },
   methods: {
-    onConfirm(refreshPage: boolean): void{
-      this.$store.dispatch(this.modal.action, this.modal.payload);
-      if(refreshPage){
-        this.$router.go(); 
+    ...mapActions({
+      openModal: 'modal/openModal'
+    }),
+    onLogout(): void {
+      this.openModal({
+        type: 'confirm',
+        title: 'Logout',
+        message: 'Are you sure?',
+        action: 'user/signout'
+      });
+    },
+    changeWindowWidth(payload: string): void {
+      this.windowWidth = payload + 'px';
+    },
+    onConfirm(): void {
+      this.$store.dispatch(this.modal.action, this.modal.payload).then(() => {
+        this.$router.go();
+      });
+    },
+    toPage(path: string): void {
+      if (this.$router.currentRoute.path !== path) {
+        this.$router.push(path);
       }
     }
   }

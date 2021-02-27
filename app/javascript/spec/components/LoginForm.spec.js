@@ -18,7 +18,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(VueRouter);
 
-jest.mock('@/services/APIServices', () => {
+jest.mock('@/services/AuthServices', () => {
   return {
     signin: jest.fn()
   };

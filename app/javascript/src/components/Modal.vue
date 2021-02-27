@@ -139,12 +139,7 @@ export default {
       }, 300);
     },
     onConfirm(): void {
-      this.showModalContent = false;
-      const refreshPage = true;
-      this.$emit('confirm', refreshPage);
-      setTimeout(() => {
-        this.closeModal();
-      }, 300);
+      this.$emit('confirm');
     },
   },
 };

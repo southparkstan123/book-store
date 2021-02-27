@@ -2,7 +2,7 @@
 import Vuex from 'vuex';
 import { mount, createLocalVue, config } from '@vue/test-utils';
 import RegistrationForm from '@/components/RegistrationForm.vue';
-import { register } from '@/services/APIServices';
+import { register } from '@/services/AuthServices';
 import flushPromises from 'flush-promises';
 
 config.showDeprecationWarnings = false;
@@ -10,7 +10,7 @@ config.showDeprecationWarnings = false;
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-jest.mock('@/services/APIServices', () => {
+jest.mock('@/services/AuthServices', () => {
   return {
     register: jest.fn()
   };

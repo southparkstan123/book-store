@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getGreetingMessage } from '@/services/APIServices';
+import { getGreetingMessage } from '@/services/AuthServices';
 
 jest.mock('axios');
 
