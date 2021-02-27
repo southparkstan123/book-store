@@ -2,13 +2,18 @@
   <transition
     name="fade"
     type="animation"
+    :duration="duration"
+    :appear="appear"
   >
-    <slot />
+    <slot></slot>
   </transition>
 </template>
 
 <script lang="ts">
-export default {};
+import transitionMixin from '@/mixins/transition';
+export default {
+  mixins: [transitionMixin]
+};
 </script>
 
 <style scoped>

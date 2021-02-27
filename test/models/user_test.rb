@@ -37,7 +37,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should save user' do
-    user = User.create(username: 'admin', password: 'testing1234', email: 'admin@railsapp.com')
+    user = User.create(username: 'testing1234', password: 'testing1234', email: 'testing1234@railsapp.com')
     assert user.save
   end
 

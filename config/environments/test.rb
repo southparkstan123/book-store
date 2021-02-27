@@ -56,4 +56,8 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.cache_classes = false
+
+  config.eager_load = true
 end

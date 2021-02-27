@@ -75,5 +75,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # To allow requests to desinated host
-  config.hosts << "#{ENV.fetch("HOST_NAME")}"
+  config.hosts << ENV.fetch('HOST_NAME').to_s
 end
