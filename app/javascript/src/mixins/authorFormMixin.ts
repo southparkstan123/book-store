@@ -36,14 +36,7 @@ export default {
         this.form.name = name;
         this.form.description = description;
       } catch (error) {
-        const { status }  = error.response;
-        const { message } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
-        });
+        onHandleError(error);
       } finally {
         this.isLoading = false;
       }
@@ -63,17 +56,33 @@ export default {
 
         this.$router.push('/authors');
       } catch (error) {
-        const { status }  = error.response;
-        const { message , errors } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
-        });
-
+        const { errors } = error.response.data;
+        onHandleError(error);
         this.errors = errors;
       }
+    },
+    async onDeleteAuthor(): Promise<void> {
+      try {
+        await this.openModal({
+          type: 'confirm',
+          title: 'Delete',
+          message: 'Are you sure?',
+          action: 'author/delete',
+          payload: { id: this.$route.params.id }
+        });
+      } catch (error) {
+        this.onHandleError(error);
+      }
+    },
+    onHandleError(error: any): void {
+      const { status }  = error.response;
+      const { message } = error.response.data;
+  
+      this.openModal({
+        type: 'alert',
+        message,
+        title: `${status} Error`,
+      });
     }
   },
   mounted(): void {

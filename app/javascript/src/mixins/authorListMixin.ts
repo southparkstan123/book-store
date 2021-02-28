@@ -26,18 +26,21 @@ export default {
         const result = await fetchRecords('author');
         this.authors = result.data;
       } catch (error) {
-        const { status }  = error.response;
-        const { message } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
-        });
+        this.onHandleError(error);
       } finally {
         this.isLoading = false;
       }
     },
+    onHandleError(error: any): void {
+      const { status }  = error.response;
+      const { message } = error.response.data;
+  
+      this.openModal({
+        type: 'alert',
+        message,
+        title: `${status} Error`,
+      });
+    }
   },
   mounted(): void {
     this.getAuthors();

@@ -4,20 +4,38 @@
       <div v-if="!isLoading">
         <fade-transition appear>
           <div>
-            <table-list>
-              <tr slot="header">
-                <th class="w-1/6 border border-green-600">Name</th>
-                <th class="w-1/6 border border-green-600">Description</th>
-                <th class="w-1/6 border border-green-600">Created By</th>
-                <th class="w-1/6 border border-green-600">Updated By</th>
-              </tr>
-              <tr slot="body" v-for="publisher in publishers" :key="publisher.id">
-                <td class="border border-green-600">{{ publisher.name }}</td>
-                <td class="border border-green-600">{{ publisher.description }}</td>
-                <td class="border border-green-600">{{ publisher.creator.username }}</td>
-                <td class="border border-green-600">{{ publisher.updater.username }}</td>
-              </tr>
-            </table-list>
+            <div v-if="publishers.length > 0">
+              <table-list>
+                <router-link to="publisher/add" slot="add">Add Publisher</router-link>
+                <tr slot="header">
+                  <th class="w-1/6 border border-green-600">Name</th>
+                  <th class="w-1/6 border border-green-600">Description</th>
+                  <th class="w-1/6 border border-green-600">Created By</th>
+                  <th class="w-1/6 border border-green-600">Updated By</th>
+                  <th class="w-1/6 border border-green-600">Actions</th>
+                </tr>
+                <tr slot="body" v-for="publisher in publishers" :key="publisher.id">
+                  <td class="border border-green-600">{{ publisher.name }}</td>
+                  <td class="border border-green-600">{{ publisher.description }}</td>
+                  <td class="border border-green-600">{{ publisher.creator.username }}</td>
+                  <td class="border border-green-600">{{ publisher.updater.username }}</td>
+                  <td class="border border-green-600">
+                    <router-link 
+                      class="inline-block" 
+                      :to="{ path: `/publisher/edit/${publisher.id}` }"
+                    >
+                      Edit
+                    </router-link>
+                  </td>
+                </tr>
+              </table-list>
+            </div>
+            <div v-else>
+              <div class="text-center">
+                <h1 class="text-2xl text-red-500">No Publisher</h1>
+                <router-link to="publisher/add" slot="add">Add Publisher</router-link>
+              </div>
+            </div>
           </div>
         </fade-transition>
       </div>
@@ -32,7 +50,7 @@
 
 <script lang="ts">
 import { Publisher } from '@/type';
-import { fetchPublishers } from '@/services/APIServices';
+import { fetchRecords } from '@/services/CRUDServices';
 import FadeTransition from '@/components/FadeTransition.vue';
 import TableList from '@/components/TableList.vue';
 
@@ -56,16 +74,29 @@ export default {
     async getPublishers(): Promise<void> {
       try {
         this.isLoading = true;
-        const result = await fetchPublishers();
+        const result = await fetchRecords('publisher');
         this.publishers = result.data;
       } catch (error) {
-        console.log(error.response.data.message);
+        this.onHadleError(error);
       } finally {
         this.isLoading = false;
       }
     },
+    onHandleError(error: any): void {
+      const { status }  = error.response;
+      const { message } = error.response.data;
+
+      this.openModal({
+        type: 'alert',
+        message,
+        title: `${status} Error`,
+      });
+    }
   },
-  mounted(): void {
+  watch: {
+    '$route': '/publishers'
+  },
+  created(): void {
     this.getPublishers();
   }
 };

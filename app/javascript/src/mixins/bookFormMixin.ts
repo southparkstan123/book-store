@@ -42,15 +42,7 @@ export default {
         this.form.publisher_id = publisher.id;
         this.form.author_ids = authors.map((author: any) => author.id);
       } catch (error) {
-        const { status }  = error.response;
-        const { message } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
-        });
-
+        this.onHandleError(error);
       } finally {
         this.isLoading = false;
       }
@@ -70,16 +62,20 @@ export default {
         
         this.$router.push('/books');
       } catch (error) {
-        const { status }  = error.response;
-        const { message , errors } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
+        onHandleError(error);
+      }
+    },
+    async onDeleteBook(): Promise<void> {
+      try {
+        await this.openModal({
+          type: 'confirm',
+          title: 'Delete',
+          message: 'Are you sure?',
+          action: 'book/delete',
+          payload: { id: this.$route.params.id }
         });
-
-        this.errors = errors;
+      } catch (error) {
+        this.onHandleError(error);
       }
     },
     changePublisher(payload: number): void {
@@ -87,6 +83,16 @@ export default {
     },
     changeAuthors(payload: Array<number>): void {
       this.form.author_ids = payload;
+    },
+    onHandleError(error: any): void {
+      const { status }  = error.response;
+      const { message } = error.response.data;
+  
+      this.openModal({
+        type: 'alert',
+        message,
+        title: `${status} Error`,
+      });
     }
   },
   mounted(): void {

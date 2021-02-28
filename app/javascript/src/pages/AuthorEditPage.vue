@@ -2,6 +2,13 @@
   <div class="min-h-screen flex items-center justify-center">
     <div v-if="!isLoading" class="max-w-md w-full space-y-8">
       <error-feedback :errors="errors" v-if="errors.length > 0"/>
+      <button 
+        v-if="mode === 'edit'"
+        class="inline-block"
+        @click="onDeleteAuthor()"
+      >
+        Delete
+      </button>  
       <form class="mt-8 space-y-6" @submit.prevent="onUpdateAuthorRecord">
         <div class="mt-8 grid grid-cols-1 gap-6 items-start">
           <div class="grid grid-cols-1 gap-6">
