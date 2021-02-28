@@ -6,12 +6,9 @@ import NotFoundPage from '@/pages/NotFoundPage.vue';
 import BookListingPage from '@/pages/BookListingPage.vue';
 import AuthorListingPage from '@/pages/AuthorListingPage.vue';
 import PublisherListingPage from '@/pages/PublisherListingPage.vue';
-<<<<<<< HEAD
 import BookEditPage from '@/pages/BookEditPage.vue';
 import AuthorEditPage from '@/pages/AuthorEditPage.vue';
 import PublisherEditPage from '@/pages/PublisherEditPage.vue';
-=======
->>>>>>> develop
 
 export const routes = [
   { 

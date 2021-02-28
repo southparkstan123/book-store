@@ -100,22 +100,10 @@ export default {
     changeWindowWidth(payload: string): void {
       this.windowWidth = payload + 'px';
     },
-<<<<<<< HEAD
     onConfirm(): void {
       this.$store.dispatch(this.modal.action, this.modal.payload).then(() => {
         this.$router.go();
       });
-    },
-    toPage(path: string): void {
-      if (this.$router.currentRoute.path !== path) {
-        this.$router.push(path);
-=======
-    onConfirm(refreshPage: boolean): void {
-      this.$store.dispatch(this.modal.action, this.modal.payload);
-      if(refreshPage){
-        this.$router.go(); 
->>>>>>> develop
-      }
     },
     toPage(path: string): void {
       if (this.$router.currentRoute.path !== path) {
