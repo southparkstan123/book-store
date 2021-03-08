@@ -2,6 +2,7 @@ import { Publisher } from '@/type';
 import { fetchRecords } from '@/services/CRUDServices';
 import FadeTransition from '@/components/FadeTransition.vue';
 import TableList from '@/components/TableList.vue';
+import errorHandleMixin from '@/mixins/errorHandleMixin';
 
 type AuthorState = {
   publishers: Array<Publisher>,
@@ -9,6 +10,7 @@ type AuthorState = {
 }
 
 export default {
+  mixins: [errorHandleMixin],
   components: { 
     'fade-transition': FadeTransition,
     'table-list': TableList 
@@ -30,16 +32,6 @@ export default {
       } finally {
         this.isLoading = false;
       }
-    },
-    onHandleError(error: any): void {
-      const { status }  = error.response;
-      const { message } = error.response.data;
-  
-      this.openModal({
-        type: 'alert',
-        message,
-        title: `${status} Error`,
-      });
     }
   },
   mounted(): void {

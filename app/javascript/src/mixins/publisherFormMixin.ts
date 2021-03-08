@@ -1,15 +1,16 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { PublisherForm } from '@/type';
+import errorHandleMixin from '@/mixins/errorHandleMixin';
 
 type PublisherFormState = {
   form: PublisherForm,
   isLoading: boolean,
   mode: 'add' | 'edit',
-  errors: Array<string>
 }
 
 export default {
+  mixins: [errorHandleMixin],
   data(): PublisherFormState {
     return {
       form: {
@@ -18,14 +19,13 @@ export default {
       },
       isLoading: false,
       mode: 'add',
-      errors: []
     };
   },
   methods: {
     ...mapActions({
       openModal: 'modal/openModal',
-      create: `publisher/create`,
-      update: `publisher/update`
+      create: 'publisher/create',
+      update: 'publisher/update'
     }),
     async onFetchPublisherRecord(id: number): Promise<void> {
       try {
@@ -56,9 +56,7 @@ export default {
 
         this.$router.push('/publishers');
       } catch (error) {
-        const { errors } = error.response.data;
         this.onHandleError(error);
-        this.errors = errors;
       }
     },
     async onDeletePublisher(): Promise<void> {
@@ -73,21 +71,11 @@ export default {
       } catch (error) {
         this.onHandleError(error);
       }
-    },
-    onHandleError(error: any): void {
-      const { status }  = error.response;
-      const { message } = error.response.data;
-  
-      this.openModal({
-        type: 'alert',
-        message,
-        title: `${status} Error`,
-      });
     }
   },
   mounted(): void {
     if(this.$route.params.id) {
-      this.mode = 'edit'
+      this.mode = 'edit';
     }
     if(this.mode === 'edit') {
       this.onFetchPublisherRecord(this.$route.params.id);

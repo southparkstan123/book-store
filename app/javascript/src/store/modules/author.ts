@@ -2,7 +2,7 @@ import {
   deleteRecordById, 
   updateRecordById,
   createRecord
-} from "@/services/CRUDServices";
+} from '@/services/CRUDServices';
 
 import { AuthorForm } from '@/type';
 
@@ -13,7 +13,7 @@ const actions = {
     try {
       const response = await deleteRecordById(payload.id, 'author');
       return dispatch('modal/openModal', {
-        title: `Success`,
+        title: 'Success',
         message: response.data.message,
         type: 'alert'
       }, { root: true });

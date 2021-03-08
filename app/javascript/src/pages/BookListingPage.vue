@@ -57,6 +57,7 @@ import FadeTransition from '@/components/FadeTransition.vue';
 import TableList from '@/components/TableList.vue';
 import { mapActions } from 'vuex';
 import { NavigationGuardNext } from 'vue-router';
+import errorHandleMixin from '@/mixins/errorHandleMixin';
 
 type BookState = {
   books: Array<Book>,
@@ -64,6 +65,7 @@ type BookState = {
 }
 
 export default {
+  mixins: [errorHandleMixin],
   components: { 
     'fade-transition': FadeTransition,
     'table-list': TableList 
@@ -77,17 +79,7 @@ export default {
   methods: {
     ...mapActions({
       openModal: 'modal/openModal'
-    }),
-    onHandleError(error: any): void {
-      const { status }  = error.response;
-      const { message } = error.response.data;
-
-      this.openModal({
-        type: 'alert',
-        message,
-        title: `${status} Error`,
-      });
-    }
+    })
   },
   beforeRouteEnter (to: any, from: any, next: NavigationGuardNext): void {
     fetchRecords('book').then(result => {

@@ -1,13 +1,5 @@
 import axios from 'axios';
-import { ModuleType } from '@/type'
-
-const token: string | null = localStorage.getItem('token');
-
-const headers = {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-}
+import { ModuleType } from '@/type';
 
 export async function fetchRecords(module: ModuleType): Promise<any> {
   const result = await axios.get(`/api/v1/${module}/list`);
@@ -22,20 +14,32 @@ export async function fetchRecordById(id: number, module: ModuleType): Promise<a
 export async function updateRecordById(id: number, payload: any, module: ModuleType): Promise<any> {
   const token: string | null = localStorage.getItem('token');
 
-  const result = await axios.patch(`/api/v1/${module}/${id}`, payload, headers);
+  const result = await axios.patch(`/api/v1/${module}/${id}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   return result;
 }
 
 export async function createRecord(payload: any, module: ModuleType): Promise<any> {
   const token: string | null = localStorage.getItem('token');
 
-  const result = await axios.post(`/api/v1/${module}`, payload, headers);
+  const result = await axios.post(`/api/v1/${module}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   return result;
 }
 
 export async function deleteRecordById(id: number, module: ModuleType): Promise<any> {
   const token: string | null = localStorage.getItem('token');
 
-  const result = await axios.delete(`/api/v1/${module}/${id}`, headers);
+  const result = await axios.delete(`/api/v1/${module}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   return result;
 }

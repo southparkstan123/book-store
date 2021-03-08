@@ -1,15 +1,16 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { BookForm } from '@/type';
+import errorHandleMixin from '@/mixins/errorHandleMixin';
 
 type BookFormState = {
   form: BookForm,
   isLoading: boolean,
-  mode: 'add' | 'edit',
-  errors: Array<string>
+  mode: 'add' | 'edit'
 }
 
 export default {
+  mixins: [errorHandleMixin],
   data(): BookFormState {
     return {
       form: {
@@ -20,8 +21,7 @@ export default {
         author_ids: []
       },
       isLoading: false,
-      mode: 'add',
-      errors: []
+      mode: 'add'
     };
   },
   methods: {
@@ -62,7 +62,7 @@ export default {
         
         this.$router.push('/books');
       } catch (error) {
-        onHandleError(error);
+        this.onHandleError(error);
       }
     },
     async onDeleteBook(): Promise<void> {
@@ -83,21 +83,11 @@ export default {
     },
     changeAuthors(payload: Array<number>): void {
       this.form.author_ids = payload;
-    },
-    onHandleError(error: any): void {
-      const { status }  = error.response;
-      const { message } = error.response.data;
-  
-      this.openModal({
-        type: 'alert',
-        message,
-        title: `${status} Error`,
-      });
     }
   },
   mounted(): void {
     if(this.$route.params.id) {
-      this.mode = 'edit'
+      this.mode = 'edit';
     }
     if(this.mode === 'edit') {
       this.onFetchBookRecord(this.$route.params.id);

@@ -1,15 +1,16 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { AuthorForm } from '@/type';
+import errorHandleMixin from '@/mixins/errorHandleMixin';
 
 type AuthorFormState = {
   form: AuthorForm,
   isLoading: boolean,
   mode: 'add' | 'edit',
-  errors: Array<string>
 }
 
 export default {
+  mixins: [errorHandleMixin],
   data(): AuthorFormState {
     return {
       form: {
@@ -17,15 +18,14 @@ export default {
         description: '',
       },
       isLoading: false,
-      mode: 'add',
-      errors: []
+      mode: 'add'
     };
   },
   methods: {
     ...mapActions({
       openModal: 'modal/openModal',
-      create: `author/create`,
-      update: `author/update`
+      create: 'author/create',
+      update: 'author/update'
     }),
     async onFetchAuthorRecord(id: number): Promise<void> {
       try {
@@ -36,7 +36,7 @@ export default {
         this.form.name = name;
         this.form.description = description;
       } catch (error) {
-        onHandleError(error);
+        this.onHandleError(error);
       } finally {
         this.isLoading = false;
       }
@@ -56,9 +56,7 @@ export default {
 
         this.$router.push('/authors');
       } catch (error) {
-        const { errors } = error.response.data;
-        onHandleError(error);
-        this.errors = errors;
+        this.onHandleError(error);
       }
     },
     async onDeleteAuthor(): Promise<void> {
@@ -73,21 +71,11 @@ export default {
       } catch (error) {
         this.onHandleError(error);
       }
-    },
-    onHandleError(error: any): void {
-      const { status }  = error.response;
-      const { message } = error.response.data;
-  
-      this.openModal({
-        type: 'alert',
-        message,
-        title: `${status} Error`,
-      });
     }
   },
   mounted(): void {
     if(this.$route.params.id) {
-      this.mode = 'edit'
+      this.mode = 'edit';
     }
     if(this.mode === 'edit') {
       this.onFetchAuthorRecord(this.$route.params.id);
