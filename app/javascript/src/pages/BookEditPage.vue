@@ -28,7 +28,7 @@
             </label>
             <label class="block" for="price">
               <span class="text-gray-700">Price</span>
-              <input class="block w-full mt-1" type="number" name="price" step="0.1" v-model.number="form.price"/>
+              <input class="block w-full mt-1" type="number" name="price" step="0.1" min="0" v-model.number="form.price"/>
             </label>
           </div>
           <div class="grid grid-cols-1 gap-6">
