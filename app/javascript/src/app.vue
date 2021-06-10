@@ -47,9 +47,9 @@
       <menu-icon slot="open-button" :strokeColor="'black'" :strokeWidth="'3'"/>
       <close-icon slot="close-button" :strokeColor="'black'" :strokeWidth="'3'"/>
     </nav-bar>
-    <slide-transition>
+    <fade-transition>
       <router-view></router-view>
-    </slide-transition>
+    </fade-transition>
   </div>
 </template>
 
@@ -62,7 +62,7 @@ import Modal from '@/components/Modal.vue';
 import MenuIcon from '@/components/icons/MenuIcon.vue';
 import CloseIcon from '@/components/icons/CloseIcon.vue';
 import MyVueNavBar from '@/components/menu/MyVueNavBar.vue';
-import SlideTransition from '@/components/SlideTransition.vue';
+import FadeTransition from '@/components/FadeTransition.vue';
 
 export default {
   components: {
@@ -70,7 +70,7 @@ export default {
     'menu-icon': MenuIcon,
     'close-icon': CloseIcon,
     'nav-bar': MyVueNavBar,
-    'slide-transition': SlideTransition
+    'fade-transition': FadeTransition
 
   },
   computed: {

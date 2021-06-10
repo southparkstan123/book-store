@@ -1,7 +1,7 @@
 <template>
-  <FadeTransition :duration="1000">
+  <FadeTransition>
     <div class="overlay">
-      <SlideTransition :duration="1000">
+      <SlideTransition>
         <div :style="{ 'background-color' : backgroundColor, width }" v-if="showMenuContent">
           <MobileMenuBody>
             <MobileMenuCloseButton 

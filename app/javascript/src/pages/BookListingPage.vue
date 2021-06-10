@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen flex items-center justify-center">
     <div class="container mx-auto">
-      <div v-if="!isLoading">
-        <fade-transition appear>
+      <fade-transition appear>
+        <div v-if="!isLoading">
           <div>
             <div v-if="books.length > 0">
               <table-list>
@@ -39,13 +39,11 @@
               </div>
             </div>
           </div>
-        </fade-transition>
-      </div>
-      <div v-else>
-        <fade-transition appear>
+        </div>
+        <div v-else>
           <h1 class="text-center text-2xl text-red-500">Loading...</h1>
-        </fade-transition>
-      </div>
+        </div>
+      </fade-transition>
     </div>
   </div>
 </template>
