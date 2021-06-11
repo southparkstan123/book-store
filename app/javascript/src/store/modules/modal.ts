@@ -6,11 +6,7 @@ const state: Modal = {
   message: '',
   title: '',
   component: '',
-  params: {},
-  action: '',
-  payload: {},
-  resolvePromise: undefined,
-  rejectPromise: undefined
+  resolvePromise: undefined
 };
 
 const namespaced = true;
@@ -27,7 +23,6 @@ const actions = {
 
     return new Promise((resolve, reject) => {
       this.resolvePromise = resolve
-      this.rejectPromise = reject
     });
   },
   onConfirm({ commit }: {commit : Function}){
@@ -42,30 +37,23 @@ const actions = {
 
 const mutations = {
   OPEN_MODAL(state: Modal, payload: OpenModalPayload): void {
-    state.visible = true,
-    state.title = payload.title,
-    state.type = payload.type,
-    state.component = payload.component,
-    state.message = payload.message,
-    state.params = (payload.params) ? payload.params : {};
-    state.action = (payload.action) ? payload.action : '';
-    state.payload = (payload.payload) ? payload.payload : {};
+    state.visible = true;
+    state.title = payload.title;
+    state.type = payload.type;
+    state.component = payload.component;
+    state.message = payload.message;
   },
   CLOSE_MODAL(state: Modal): void {
-    state.visible = false,
-    state.message = '',
-    state.title = '',
-    state.type = 'alert',
-    state.component = '',
-    state.params = {},
-    state.action = '',
-    state.payload = {};
+    state.visible = false;
+    state.message = '';
+    state.title = '';
+    state.type = 'alert';
+    state.component = '';
   }
 };
 
 const getters = {
-  getModalObject: (state: Modal): Modal => state,
-  getParams: (state: Modal): any => state.params
+  getModalObject: (state: Modal): Modal => state
 };
 
 const store = {

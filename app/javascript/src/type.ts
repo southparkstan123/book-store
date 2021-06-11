@@ -12,22 +12,15 @@ export type Modal = {
   type: ModelType;
   message: string;
   title: string;
-  action: string;
-  payload: any;
   component: string;
-  params: any;
-  resolvePromise: any,
-  rejectPromise: any
+  resolvePromise: any
 }
 
 export type OpenModalPayload = {
   type: ModelType;
   message: string;
   title: string;
-  action: string;
-  payload: any;
   component: string | "";
-  params: any;
 }
 
 export type UserInfo = {
