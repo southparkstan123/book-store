@@ -7,6 +7,7 @@ type PublisherFormState = {
   form: PublisherForm,
   isLoading: boolean,
   mode: 'add' | 'edit',
+  isFormChanged: boolean
 }
 
 export default {
@@ -19,11 +20,13 @@ export default {
       },
       isLoading: false,
       mode: 'add',
+      isFormChanged: false
     };
   },
   methods: {
     ...mapActions({
       openModal: 'modal/openModal',
+      openConfirmModal: 'modal/openConfirmModal',
       create: 'publisher/create',
       update: 'publisher/update'
     }),
@@ -43,34 +46,46 @@ export default {
     },
     async onUpdatePublisherRecord(): Promise<void> {
       try {
+        this.isFormChanged = false;
+        let response = {};
+
         if (this.mode === 'edit') {
-          await this.update({
+          response = await this.update({
             id: this.$route.params.id, 
             form: this.form
           });
         } else {
-          await this.create({
+          response = await this.create({
             form: this.form
           });
-        }
 
-        this.$router.push('/publishers');
+          if (response.status === 200 | 201) {
+            this.$router.push('/publishers');
+          }
+        }
       } catch (error) {
         this.onHandleError(error);
       }
     },
     async onDeletePublisher(): Promise<void> {
       try {
-        await this.openModal({
+        const confirm = await this.openConfirmModal({
           type: 'confirm',
           title: 'Delete',
-          message: 'Are you sure?',
-          action: 'publisher/delete',
-          payload: { id: this.$route.params.id }
+          message: 'Are you sure?'
         });
+
+        if(confirm) {
+          this.$store.dispatch('publisher/delete', { id: this.$route.params.id }).then(() => {
+            this.$router.push('/publishers');
+          })
+        }
       } catch (error) {
         this.onHandleError(error);
       }
+    },
+    onChangeForm(): void {
+      this.isFormChanged = true;
     }
   },
   mounted(): void {

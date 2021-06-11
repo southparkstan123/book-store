@@ -16,6 +16,8 @@ export type Modal = {
   payload: any;
   component: string;
   params: any;
+  resolvePromise: any,
+  rejectPromise: any
 }
 
 export type OpenModalPayload = {

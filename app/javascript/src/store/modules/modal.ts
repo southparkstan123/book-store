@@ -8,7 +8,9 @@ const state: Modal = {
   component: '',
   params: {},
   action: '',
-  payload: {}
+  payload: {},
+  resolvePromise: undefined,
+  rejectPromise: undefined
 };
 
 const namespaced = true;
@@ -19,6 +21,22 @@ const actions = {
   },
   openModal({ commit }: {commit : Function}, payload: OpenModalPayload): void {
     commit('OPEN_MODAL', payload);
+  },
+  openConfirmModal({ commit }: {commit : Function}, payload: OpenModalPayload): Promise<void> {
+    commit('OPEN_MODAL', payload);
+
+    return new Promise((resolve, reject) => {
+      this.resolvePromise = resolve
+      this.rejectPromise = reject
+    });
+  },
+  onConfirm({ commit }: {commit : Function}){
+    commit('CLOSE_MODAL');
+    this.resolvePromise(true);
+  },
+  onReject({ commit }: {commit : Function}){
+    commit('CLOSE_MODAL');
+    this.resolvePromise(false);
   }
 };
 

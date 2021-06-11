@@ -3,7 +3,6 @@
     <modal
       v-if="modal.visible"
       :type="modal.type"
-      @confirm="onConfirm"
     >
       <h4
         slot="header"
@@ -87,23 +86,23 @@ export default {
   },
   methods: {
     ...mapActions({
-      openModal: 'modal/openModal'
+      openConfirmModal: 'modal/openConfirmModal'
     }),
     onLogout(): void {
-      this.openModal({
+      const confirm = this.openConfirmModal({
         type: 'confirm',
         title: 'Logout',
-        message: 'Are you sure?',
-        action: 'user/signout'
+        message: 'Are you sure?'
       });
+
+      if(confirm) {
+        this.$store.dispatch('user/signout').then(() => {
+          this.$router.push('/signin');
+        });
+      }
     },
     changeWindowWidth(payload: string): void {
       this.windowWidth = payload + 'px';
-    },
-    onConfirm(): void {
-      this.$store.dispatch(this.modal.action, this.modal.payload).then(() => {
-        this.$router.go();
-      });
     },
     toPage(path: string): void {
       if (this.$router.currentRoute.path !== path) {

@@ -6,7 +6,8 @@ import errorHandleMixin from '@/mixins/errorHandleMixin';
 type BookFormState = {
   form: BookForm,
   isLoading: boolean,
-  mode: 'add' | 'edit'
+  mode: 'add' | 'edit',
+  isFormChanged: boolean
 }
 
 export default {
@@ -21,14 +22,15 @@ export default {
         author_ids: []
       },
       isLoading: false,
-      mode: 'add'
+      mode: 'add',
+      isFormChanged: false
     };
   },
   methods: {
     ...mapActions({
-      openModal: 'modal/openModal',
-      createBook: 'book/create',
-      updateBook: 'book/update'
+      openConfirmModal: 'modal/openConfirmModal',
+      create: 'book/create',
+      update: 'book/update'
     }),
     async onFetchBookRecord(id: number): Promise<void> {
       try {
@@ -49,40 +51,50 @@ export default {
     },
     async onUpdateBookRecord(): Promise<void> {
       try {
+        this.isFormChanged = false;
+        let response = {};
+
         if (this.mode === 'edit') {
-          await this.updateBook({
+          response = await this.update({
             id: this.$route.params.id, 
             form: this.form
           });
         } else {
-          await this.createBook({
+          response = await this.create({
             form: this.form
           });
+
+          if (response.status === 200 | 201) {
+            this.$router.push('/books');
+          }
         }
-        
-        this.$router.push('/books');
       } catch (error) {
         this.onHandleError(error);
       }
     },
     async onDeleteBook(): Promise<void> {
-      try {
-        await this.openModal({
-          type: 'confirm',
-          title: 'Delete',
-          message: 'Are you sure?',
-          action: 'book/delete',
-          payload: { id: this.$route.params.id }
-        });
-      } catch (error) {
-        this.onHandleError(error);
+      const confirm = await this.openConfirmModal({
+        type: 'confirm',
+        title: 'Delete',
+        message: 'Are you sure?'
+      });
+
+      if(confirm) {
+        this.$store.dispatch('book/delete', { id: this.$route.params.id }).then(() => {
+          this.$router.push('/books');
+        })
       }
     },
     changePublisher(payload: number): void {
       this.form.publisher_id = payload;
+      this.onChangeForm();
     },
     changeAuthors(payload: Array<number>): void {
       this.form.author_ids = payload;
+      this.onChangeForm();
+    },
+    onChangeForm(): void {
+      this.isFormChanged = true;
     }
   },
   mounted(): void {
