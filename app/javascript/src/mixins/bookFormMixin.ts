@@ -1,7 +1,7 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { BookForm } from '@/type';
-import errorHandleMixin from '@/mixins/errorHandleMixin';
+import formMixin from '@/mixins/formMixin';
 
 type BookFormState = {
   form: BookForm,
@@ -11,7 +11,7 @@ type BookFormState = {
 }
 
 export default {
-  mixins: [errorHandleMixin],
+  mixins: [formMixin],
   data(): BookFormState {
     return {
       form: {
@@ -22,13 +22,12 @@ export default {
         author_ids: []
       },
       isLoading: false,
-      mode: 'add',
-      isFormChanged: false
+      mode: 'add'
     };
   },
   methods: {
     ...mapActions({
-      openConfirmModal: 'modal/openConfirmModal',
+      openModal: 'modal/openModal',
       create: 'book/create',
       update: 'book/update'
     }),
@@ -63,17 +62,18 @@ export default {
           response = await this.create({
             form: this.form
           });
-
-          if (response.status === 200 | 201) {
-            this.$router.push('/books');
-          }
         }
+
+        if (response.status === 200 | 201) {
+          this.$router.push('/books');
+        }
+
       } catch (error) {
         this.onHandleError(error);
       }
     },
     async onDeleteBook(): Promise<void> {
-      const confirm = await this.openConfirmModal({
+      const confirm = await this.openModal({
         type: 'confirm',
         title: 'Delete',
         message: 'Are you sure?'

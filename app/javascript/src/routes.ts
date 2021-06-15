@@ -29,14 +29,16 @@ export const routes = [
     path: '/book/edit/:id',
     component: BookEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 
     path: '/book/add',
     component: BookEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 
@@ -50,14 +52,16 @@ export const routes = [
     path: '/author/edit/:id',
     component: AuthorEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 
     path: '/author/add',
     component: AuthorEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 
@@ -71,14 +75,16 @@ export const routes = [
     path: '/publisher/edit/:id',
     component: PublisherEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 
     path: '/publisher/add',
     component: PublisherEditPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      haveForm: true
     }
   },
   { 

@@ -55,7 +55,7 @@ import FadeTransition from '@/components/FadeTransition.vue';
 import TableList from '@/components/TableList.vue';
 import { mapActions } from 'vuex';
 import { NavigationGuardNext } from 'vue-router';
-import errorHandleMixin from '@/mixins/errorHandleMixin';
+import formMixin from '@/mixins/formMixin';
 
 type BookState = {
   books: Array<Book>,
@@ -63,7 +63,7 @@ type BookState = {
 }
 
 export default {
-  mixins: [errorHandleMixin],
+  mixins: [formMixin],
   components: { 
     'fade-transition': FadeTransition,
     'table-list': TableList 

@@ -63,19 +63,7 @@ export default {
   },
   mixins: [authorFormMixin],
   async beforeRouteLeave (to: any, from: any, next: any): Promise<any> {
-    if(this.isFormChanged === true) {
-      const answer = await this.openConfirmModal({
-        type: 'confirm',
-        title: 'Unsaved changes',
-        message: 'Do you really want to leave?',
-      });
-
-      if (answer) {
-        next();
-      } 
-    } else {
-      next();
-    }
+    await this.beforeLeave(to, from, next);
   }
 };
 </script>

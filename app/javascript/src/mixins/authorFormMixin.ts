@@ -1,17 +1,16 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { AuthorForm } from '@/type';
-import errorHandleMixin from '@/mixins/errorHandleMixin';
+import formMixin from '@/mixins/formMixin';
 
 type AuthorFormState = {
   form: AuthorForm,
   isLoading: boolean,
-  mode: 'add' | 'edit',
-  isFormChanged: boolean
+  mode: 'add' | 'edit'
 }
 
 export default {
-  mixins: [errorHandleMixin],
+  mixins: [formMixin],
   data(): AuthorFormState {
     return {
       form: {
@@ -19,14 +18,12 @@ export default {
         description: '',
       },
       isLoading: false,
-      mode: 'add',
-      isFormChanged: false
+      mode: 'add'
     };
   },
   methods: {
     ...mapActions({
       openModal: 'modal/openModal',
-      openConfirmModal: 'modal/openConfirmModal',
       create: 'author/create',
       update: 'author/update'
     }),
@@ -58,12 +55,11 @@ export default {
           response = await this.create({
             form: this.form
           });
-
-          if (response.status === 200 | 201) {
-            this.$router.push('/authors');
-          }
         }
-        
+
+        if (response.status === 200 | 201) {
+          this.$router.push('/authors');
+        }
       } catch (error) {
         this.onHandleError(error);
       }
@@ -72,7 +68,7 @@ export default {
       try {
         this.isFormChanged = false;
 
-        const confirm = await this.openConfirmModal({
+        const confirm = await this.openModal({
           type: 'confirm',
           title: 'Delete',
           message: 'Are you sure?'

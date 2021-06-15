@@ -15,10 +15,7 @@ const actions = {
   closeModal({ commit }: {commit : Function}): void {
     commit('CLOSE_MODAL');
   },
-  openModal({ commit }: {commit : Function}, payload: OpenModalPayload): void {
-    commit('OPEN_MODAL', payload);
-  },
-  openConfirmModal({ commit }: {commit : Function}, payload: OpenModalPayload): Promise<void> {
+  openModal({ commit }: {commit : Function}, payload: OpenModalPayload): Promise<void> {
     commit('OPEN_MODAL', payload);
 
     return new Promise((resolve, reject) => {

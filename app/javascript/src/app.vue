@@ -86,20 +86,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      openConfirmModal: 'modal/openConfirmModal'
+      openModal: 'modal/openModal'
     }),
-    onLogout(): void {
-      const confirm = this.openConfirmModal({
-        type: 'confirm',
-        title: 'Logout',
-        message: 'Are you sure?'
-      });
-
-      if(confirm) {
-        this.$store.dispatch('user/signout').then(() => {
-          this.$router.push('/signin');
+    async onLogout(): Promise<void> {
+      if(!this.$route.meta.haveForm) {
+        const confirm = await this.openModal({
+          type: 'confirm',
+          title: 'Logout',
+          message: 'Are you sure?'
         });
+
+        if(confirm) {
+          this.$store.dispatch('user/signout').then(() => {
+            this.$router.push('/signin');
+          });
+        }
+      } else {
+        this.$router.push('/signin');
       }
+      
     },
     changeWindowWidth(payload: string): void {
       this.windowWidth = payload + 'px';

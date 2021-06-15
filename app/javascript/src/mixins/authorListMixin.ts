@@ -2,7 +2,7 @@ import { Author } from '@/type';
 import { fetchRecords } from '@/services/CRUDServices';
 import FadeTransition from '@/components/FadeTransition.vue';
 import TableList from '@/components/TableList.vue';
-import errorHandleMixin from '@/mixins/errorHandleMixin';
+import formMixin from '@/mixins/formMixin';
 
 type AuthorState = {
   authors: Array<Author>,
@@ -10,7 +10,7 @@ type AuthorState = {
 }
 
 export default {
-  mixins: [errorHandleMixin],
+  mixins: [formMixin],
   components: { 
     'fade-transition': FadeTransition,
     'table-list': TableList 

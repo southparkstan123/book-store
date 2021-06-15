@@ -1,17 +1,16 @@
 import { fetchRecordById } from '@/services/CRUDServices';
 import { mapActions } from 'vuex';
 import { PublisherForm } from '@/type';
-import errorHandleMixin from '@/mixins/errorHandleMixin';
+import formMixin from '@/mixins/formMixin';
 
 type PublisherFormState = {
   form: PublisherForm,
   isLoading: boolean,
-  mode: 'add' | 'edit',
-  isFormChanged: boolean
+  mode: 'add' | 'edit'
 }
 
 export default {
-  mixins: [errorHandleMixin],
+  mixins: [formMixin],
   data(): PublisherFormState {
     return {
       form: {
@@ -19,14 +18,12 @@ export default {
         description: '',
       },
       isLoading: false,
-      mode: 'add',
-      isFormChanged: false
+      mode: 'add'
     };
   },
   methods: {
     ...mapActions({
       openModal: 'modal/openModal',
-      openConfirmModal: 'modal/openConfirmModal',
       create: 'publisher/create',
       update: 'publisher/update'
     }),
@@ -58,10 +55,10 @@ export default {
           response = await this.create({
             form: this.form
           });
+        }
 
-          if (response.status === 200 | 201) {
-            this.$router.push('/publishers');
-          }
+        if (response.status === 200 | 201) {
+          this.$router.push('/publishers');
         }
       } catch (error) {
         this.onHandleError(error);
@@ -69,7 +66,7 @@ export default {
     },
     async onDeletePublisher(): Promise<void> {
       try {
-        const confirm = await this.openConfirmModal({
+        const confirm = await this.openModal({
           type: 'confirm',
           title: 'Delete',
           message: 'Are you sure?'
