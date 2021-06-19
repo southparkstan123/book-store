@@ -15,17 +15,27 @@
           <div class="grid grid-cols-1 gap-6">
             <label class="block" for="name">
               <span class="text-gray-700">Name</span>
-              <input class="block w-full mt-1" type="text" name="name" v-model="form.name" @change="onChangeForm"/>
+              <input-field
+                :input-type="'text'"
+                :name="'name'"
+                :input-id="'name'"
+                :placeholder="'Name'"
+                :input-field-class="'block w-full mt-1'"
+                :is-required="true"
+                @changeValue="changeName"
+                :input-value="form.name"
+              />
             </label>
             <label class="block" for="description">
               <span class="text-gray-700">Description</span>
-              <textarea
-                class="mt-1 block w-full h-24"
-                rows="3"
-                placeholder="Abstract"
-                v-model="form.description"
-                @change="onChangeForm"
-              ></textarea>
+              <text-area
+                :class="'mt-1 block w-full h-24'"
+                :rows="'3'"
+                :placeholder="'Abstract'"
+                @changeValue="changeAbstract"
+                :input-value="form.description"
+                :is-required="true"
+              ></text-area>
             </label>
           </div>
         </div>
@@ -54,12 +64,16 @@ import authorFormMixin from '@/mixins/authorFormMixin';
 import FadeTransition from '@/components/FadeTransition.vue';
 import ErrorFeedbackVue from '@/components/ErrorFeedback.vue';
 import Button from '@/components/Button.vue';
+import TextArea from '@/components/TextArea.vue';
+import InputField from '@/components/InputField.vue';
 
 export default {
   components: { 
     'fade-transition': FadeTransition,
     'error-feedback': ErrorFeedbackVue,
-    'my-button': Button
+    'my-button': Button,
+    'text-area': TextArea,
+    'input-field': InputField
   },
   mixins: [authorFormMixin],
   async beforeRouteLeave (to: any, from: any, next: any): Promise<any> {

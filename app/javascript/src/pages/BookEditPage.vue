@@ -16,21 +16,39 @@
           <div class="grid grid-cols-1 gap-6">
             <label class="block" for="name">
               <span class="text-gray-700">Name</span>
-              <input class="block w-full mt-1" type="text" name="name" v-model="form.name" @change="onChangeForm"/>
+              <input-field
+                :input-type="'text'"
+                :name="'name'"
+                :input-id="'name'"
+                :placeholder="'Name'"
+                :input-field-class="'block w-full mt-1'"
+                :is-required="true"
+                @changeValue="changeName"
+                :input-value="form.name"
+              />
             </label>
             <label class="block" for="abtract">
               <span class="text-gray-700">Abstract</span>
-              <textarea
-                class="mt-1 block w-full h-24"
-                rows="3"
-                placeholder="Abstract"
-                v-model="form.abstract"
-                @change="onChangeForm"
-              ></textarea>
+              <text-area
+                :class="'mt-1 block w-full h-24'"
+                :rows="'3'"
+                :placeholder="'Abstract'"
+                @changeValue="changeAbstract"
+                :input-value="form.abstract"
+                :is-required="true"
+              ></text-area>
             </label>
             <label class="block" for="price">
               <span class="text-gray-700">Price</span>
-              <input class="block w-full mt-1" type="number" name="price" step="0.1" min="0" v-model.number="form.price" @change="onChangeForm"/>
+              <input 
+                class="block w-full mt-1" 
+                type="number" 
+                name="price" 
+                step="0.1" 
+                min="0" 
+                v-model.number="form.price" 
+                @change="onChangeForm"
+              />
             </label>
           </div>
           <div class="grid grid-cols-1 gap-6">
@@ -53,14 +71,6 @@
           </div>
         </div>
         <div class="block">
-          <!-- <button 
-            :disabled="!isFormChanged" 
-            type="submit" 
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Submit
-          </button> -->
-
           <my-button
             :isDisabled="!isFormChanged" 
             :buttonType="'submit'" 
@@ -87,6 +97,8 @@ import AuthorSelectOption from '@/components/AuthorSelectOption.vue';
 import PublisherDropdown from '@/components/PublisherDropdown.vue';
 import ErrorFeedbackVue from '@/components/ErrorFeedback.vue';
 import Button from '@/components/Button.vue';
+import TextArea from '@/components/TextArea.vue';
+import InputField from '@/components/InputField.vue';
 
 export default {
   components: { 
@@ -94,7 +106,9 @@ export default {
     'author-select-option': AuthorSelectOption,
     'publisher-dropdown': PublisherDropdown,
     'error-feedback': ErrorFeedbackVue,
-    'my-button': Button
+    'my-button': Button,
+    'text-area': TextArea,
+    'input-field': InputField
   },
   mixins: [bookFormMixin],
   async beforeRouteLeave (to: any, from: any, next: any): Promise<any> {
