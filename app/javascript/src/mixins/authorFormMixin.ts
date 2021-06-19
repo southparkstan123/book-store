@@ -37,6 +37,7 @@ export default {
         this.form.description = description;
       } catch (error) {
         this.onHandleError(error);
+        this.$router.push({ path: '/'});
       } finally {
         this.isLoading = false;
       }

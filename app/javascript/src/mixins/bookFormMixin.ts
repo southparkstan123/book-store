@@ -44,6 +44,7 @@ export default {
         this.form.author_ids = authors.map((author: any) => author.id);
       } catch (error) {
         this.onHandleError(error);
+        this.$router.push({ path: '/'});
       } finally {
         this.isLoading = false;
       }
