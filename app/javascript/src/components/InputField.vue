@@ -7,6 +7,7 @@
       :name="inputName"
       :placeholder="(isRequired) ? `${placeholder} (Required)` : placeholder"
       @keyup="changeValue"
+      :value="inputValue"
     >
     <slot
       v-if="inputType === 'checkbox'"
@@ -18,7 +19,10 @@
 </template>
 
 <script lang="ts">
+import inputMixin from '@/mixins/inputMixin';
+
 export default {
+  mixins: [inputMixin],
   props: {
     inputId: {
       type: String,
@@ -48,11 +52,10 @@ export default {
     isRequired: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    changeValue(event: { target: { value: string }}): void {
-      this.$emit('changeValue', event.target.value);
+    },
+    inputValue: {
+      type: String || Boolean,
+      default: ''
     }
   }
 };
