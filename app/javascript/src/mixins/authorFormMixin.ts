@@ -68,11 +68,7 @@ export default {
       try {
         this.isFormChanged = false;
 
-        const confirm = await this.openModal({
-          type: 'confirm',
-          title: 'Delete',
-          message: 'Are you sure?'
-        });
+        const confirm = await this.openConfirmModal('Are you sure?', 'Delete');
 
         if(confirm) {
           this.$store.dispatch('author/delete', { id: this.$route.params.id }).then(() => {
@@ -82,9 +78,6 @@ export default {
       } catch (error) {
         this.onHandleError(error);
       }
-    },
-    onChangeForm(): void {
-      this.isFormChanged = true;
     }
   },
   mounted(): void {

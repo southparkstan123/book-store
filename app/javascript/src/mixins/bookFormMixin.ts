@@ -73,11 +73,7 @@ export default {
       }
     },
     async onDeleteBook(): Promise<void> {
-      const confirm = await this.openModal({
-        type: 'confirm',
-        title: 'Delete',
-        message: 'Are you sure?'
-      });
+      const confirm = await this.openConfirmModal('Are you sure?', 'Delete');
 
       if(confirm) {
         this.$store.dispatch('book/delete', { id: this.$route.params.id }).then(() => {
@@ -92,9 +88,6 @@ export default {
     changeAuthors(payload: Array<number>): void {
       this.form.author_ids = payload;
       this.onChangeForm();
-    },
-    onChangeForm(): void {
-      this.isFormChanged = true;
     }
   },
   mounted(): void {

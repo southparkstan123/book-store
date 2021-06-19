@@ -68,12 +68,12 @@ import { mapActions } from 'vuex';
 import { register } from '@/services/AuthServices';
 import ErrorFeedback from '@/components/ErrorFeedback.vue';
 import InputField from '@/components/InputField.vue';
+import formMixin from '@/mixins/formMixin';
 
-type RegistrationFormState = RegistrationForm & {
-  errors: Array<string>
-}
+type RegistrationFormState = RegistrationForm;
 
 export default {
+  mixins: [formMixin],
   components: {
     'error-feedback': ErrorFeedback,
     'input-field': InputField
@@ -85,8 +85,7 @@ export default {
         password: '',
         email: '',
         password_confirmation: '',
-      },
-      errors: [],
+      }
     };
   },
   methods: {
@@ -96,40 +95,32 @@ export default {
     async onRegister(): Promise<void> {
       try {
         const response = await register(this.form);
-        this.openModal({
-          type: 'alert',
-          message: response.data.message,
-          title: 'Success!',
-        });
+        this.openSuccessModal(response.data.message, 'Success!');
         this.$router.push('/signin');
       } catch (error) {
-        const { status }  = error.response;
-        const { message , errors } = error.response.data;
-
-        this.openModal({
-          type: 'alert',
-          message,
-          title: `${status} Error`,
-        });
-        this.errors = errors;
+        this.onHandleError(error);
       }
     },
     onChangeUsername(value: string): void {
       this.form.username = value;
+      this.onChangeForm();
     },
     onChangeEmail(value: string): void {
       this.form.email = value;
+      this.onChangeForm();
     },
     onChangePassword(value: string): void {
       this.form.password = value;
+      this.onChangeForm();
     },
     onChangePasswordConfirmation(value: string): void {
       this.form.password_confirmation = value;
+      this.onChangeForm();
     },
     toLoginPage(): void {
       this.$router.push('/signin');
     },
-  },
+  }
 };
 </script>
 

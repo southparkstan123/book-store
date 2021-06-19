@@ -1,3 +1,5 @@
+import { mapActions } from "vuex";
+
 type FormState = {
   errors: Array<string>;
   isFormChanged: boolean;
@@ -11,14 +13,21 @@ export default {
     };
   },
   methods: {
-    openErrorModal(message: string, title: string) {
+    openSuccessModal(message: string, title: string): void {
+      this.openModal({
+        type: 'alert',
+        message,
+        title
+      });
+    },
+    openErrorModal(message: string, title: string): void {
       this.openModal({
         type: 'alert',
         message,
         title: `${status} Error`
       });
     },
-    async openConfirmModal(message: string, title: string) {
+    async openConfirmModal(message: string, title: string): Promise<boolean> {
       return await this.openModal({
         type: 'confirm',
         message,
@@ -34,6 +43,9 @@ export default {
       if(errors){
         this.errors = errors;
       }
+    },
+    onChangeForm(): void {
+      this.isFormChanged = true;
     },
     async beforeLeave (to: any, from: any, next: any): Promise<any> {
       if(to.matched.some(record => record.meta.forVisitorOnly) && this.isFormChanged === true) {
