@@ -48,10 +48,6 @@ export default {
       this.form.name = payload;
       this.onChangeForm();
     },
-    changeAbstract(payload: string): void {
-      this.form.abstract = payload;
-      this.onChangeForm();
-    },
     onChangeForm(): void {
       this.isFormChanged = true;
     },

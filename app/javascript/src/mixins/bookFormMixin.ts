@@ -89,7 +89,11 @@ export default {
     changeAuthors(payload: Array<number>): void {
       this.form.author_ids = payload;
       this.onChangeForm();
-    }
+    },
+    changeAbstract(payload: string): void {
+      this.form.abstract = payload;
+      this.onChangeForm();
+    },
   },
   mounted(): void {
     if(this.$route.params.id) {

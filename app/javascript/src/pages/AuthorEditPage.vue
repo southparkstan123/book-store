@@ -29,10 +29,11 @@
             <label class="block" for="description">
               <span class="text-gray-700">Description</span>
               <text-area
-                :class="'mt-1 block w-full h-24'"
+                :input-id="'description'"
+                :inputFieldClass="'mt-1 block w-full h-24'"
                 :rows="'3'"
-                :placeholder="'Abstract'"
-                @changeValue="changeAbstract"
+                :placeholder="'Description'"
+                @changeValue="changeDescription"
                 :input-value="form.description"
                 :is-required="true"
               ></text-area>

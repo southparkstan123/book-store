@@ -30,7 +30,8 @@
             <label class="block" for="abtract">
               <span class="text-gray-700">Abstract</span>
               <text-area
-                :class="'mt-1 block w-full h-24'"
+                :input-id="'abstract'"
+                :inputFieldClass="'mt-1 block w-full h-24'"
                 :rows="'3'"
                 :placeholder="'Abstract'"
                 @changeValue="changeAbstract"

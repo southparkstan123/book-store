@@ -79,6 +79,10 @@ export default {
       } catch (error) {
         this.onHandleError(error);
       }
+    },
+    changeDescription(payload: string): void {
+      this.form.description = payload;
+      this.onChangeForm();
     }
   },
   mounted(): void {
