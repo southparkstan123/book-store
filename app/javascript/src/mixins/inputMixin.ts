@@ -21,7 +21,7 @@ export default {
       default: 'Placeholder'
     },
     inputValue: {
-      type: String || Boolean,
+      type: String,
       default: ''
     },
     inputFieldClass: {
