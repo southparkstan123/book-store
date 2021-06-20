@@ -1,15 +1,19 @@
 <template>
-  <textarea 
-    :class="className"
-    :name="name" 
-    :id="id" 
-    :cols="cols" 
-    :rows="rows"
-    :readonly="isReadonly"
-    :placeholder="(isRequired) ? `${placeholder} (Required)` : placeholder"
-    @keyup="changeValue"
-    :value="inputValue"
-  ></textarea>
+  <div :class="className">
+    <textarea 
+      :class="inputFieldClass"
+      :name="inputName" 
+      :id="inputId" 
+      :cols="cols" 
+      :rows="rows"
+      :readonly="isReadonly"
+      :placeholder="(isRequired) ? `${placeholder} (Required)` : placeholder"
+      @keyup="changeValue"
+      :value="inputValue"
+    ></textarea>
+    <slot name="hints" />
+    <slot name="error-feedback" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,23 +22,7 @@ import inputMixin from '@/mixins/inputMixin';
 export default {
   mixins: [inputMixin],
   props: {
-    id: {
-      type: String,
-      default: ''
-    },
-    className: {
-      type: String,
-      default: ''
-    },
-    name: {
-      type: String,
-      default: ''
-    },
     isReadonly: {
-      type: Boolean,
-      default: false
-    },
-    isRequired: {
       type: Boolean,
       default: false
     },
@@ -45,14 +33,6 @@ export default {
     rows: {
       type: String,
       default: '10'
-    },
-    placeholder: {
-      type: String,
-      default: 'Placeholder'
-    },
-    inputValue: {
-      type: String || Boolean,
-      default: ''
     }
   }
 };
