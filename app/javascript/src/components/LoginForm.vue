@@ -21,20 +21,23 @@
     />
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <button
-          id="login"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          type="submit"
+        <my-button
+          :buttonType="'submit'"
+          :textClass="'text-sm font-medium'"
+          :backgroundClass="'group relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-white bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'"
         >
-          Login
-        </button>
+          <span slot="text">Login</span>
+        </my-button>
       </div>
-      <div class="text-sm text-blue-500">
-        <a
-          id="register"
-          href="#"
-          @click.prevent="toRegisterPage"
-        >Register</a>
+      <div class="flex items-center">
+        <my-button
+          @buttonClicked="toRegisterPage"
+          :buttonType="'button'"
+          :textClass="'text-sm text-blue-500'"
+          :backgroundClass="' focus:outline-none'"
+        >
+          <span slot="text">Register</span>
+        </my-button>
       </div>
     </div>
   </form>
@@ -44,12 +47,14 @@
 import { mapActions, mapGetters } from 'vuex';
 import InputField from '@/components/InputField.vue';
 import { LoginForm } from '@/type';
+import Button from '@/components/Button.vue';
 
 type LoginFormState = LoginForm;
 
 export default {
   components: {
-    'input-field': InputField
+    'input-field': InputField,
+    'my-button': Button
   },
   computed: {
     ...mapGetters({

@@ -42,20 +42,23 @@
       />
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <button
-            id="register"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            type="submit"
+          <my-button
+            :buttonType="'submit'"
+            :textClass="'text-sm font-medium'"
+            :backgroundClass="'group relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-white bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'"
           >
-            Register
-          </button>
+            <span slot="text">Register</span>
+          </my-button>
         </div>
-        <div class="text-sm text-blue-500">
-          <a
-            id="to-login-page"
-            href="#"
-            @click.prevent="toLoginPage"
-          >Back to login page</a>
+        <div class="flex items-center">
+          <my-button
+            @buttonClicked="toLoginPage"
+            :buttonType="'button'"
+            :textClass="'text-sm text-blue-500'"
+            :backgroundClass="' focus:outline-none'"
+          >
+            <span slot="text">Back to login page</span>
+          </my-button>
         </div>
       </div>
     </form>
@@ -69,6 +72,7 @@ import { register } from '@/services/AuthServices';
 import ErrorFeedback from '@/components/ErrorFeedback.vue';
 import InputField from '@/components/InputField.vue';
 import formMixin from '@/mixins/formMixin';
+import Button from '@/components/Button.vue';
 
 type RegistrationFormState = RegistrationForm;
 
@@ -76,7 +80,8 @@ export default {
   mixins: [formMixin],
   components: {
     'error-feedback': ErrorFeedback,
-    'input-field': InputField
+    'input-field': InputField,
+    'my-button': Button
   },
   data(): RegistrationFormState {
     return {
