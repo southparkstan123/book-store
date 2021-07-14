@@ -18,26 +18,10 @@
 
 <script lang="ts">
 import authorListMixin from '@/mixins/authorListMixin';
-export default {
-  mixins: [authorListMixin],
-  props: {
-    selectedItems: {
-      type: Array
-    },
-  },
-  methods: {
-    onChange(event: any): void {
-      let ids: Array<number> = [];
-      const options: any = event.target.options;
+import selectOptionMixin from '@/mixins/selectOptionMixin';
 
-      for (let index = 0; index < options.length; index++) {
-        if(options[index].selected === true){
-          ids.push(parseInt(options[index].value, 10));
-        } 
-      }
-      this.$emit('selectedAuthors', ids);
-    },
-  },
+export default {
+  mixins: [authorListMixin, selectOptionMixin]
 };
 </script>
 

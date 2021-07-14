@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select v-if="publishers.length > 0" :disabled="isLoading" class="block w-full mt-1" @change="onSelectPublisher">
+    <select v-if="publishers.length > 0" :disabled="isLoading" class="block w-full mt-1" @change="onSelectItem">
       <option selected="selected" disabled>Please select the publisher</option>
       <option 
         v-for="publisher in publishers" 
@@ -19,18 +19,10 @@
 
 <script lang="ts">
 import publisherListMixin from '@/mixins/publisherListMixin';
+import dropDownMixin from '@/mixins/dropDownMixin';
+
 export default {
-  mixins: [publisherListMixin],
-  props: {
-    selectedItem: {
-      type: Number
-    },
-  },
-  methods: {
-    onSelectPublisher(event: { target: { value: string }}): void {
-      this.$emit('selectPublisher', parseInt(event.target.value, 10));
-    },
-  },
+  mixins: [publisherListMixin, dropDownMixin]
 };
 </script>
 

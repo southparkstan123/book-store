@@ -56,7 +56,7 @@
             <label class="block" for="publisher">
               <span class="text-gray-700">Publisher</span>
               <publisher-dropdown 
-                @selectPublisher="changePublisher"
+                @selectItem="changePublisher"
                 :selectedItem="form.publisher_id"
               ></publisher-dropdown>
               
@@ -64,7 +64,7 @@
             <label class="block" for="authors">
               <span class="text-gray-700">Authors</span>
               <author-select-option
-                @selectedAuthors="changeAuthors"
+                @selectedItems="changeAuthors"
                 :selectedItems="form.author_ids"
               >
               </author-select-option>
